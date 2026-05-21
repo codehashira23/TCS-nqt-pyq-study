@@ -6,6 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from code_format import annotate_cpp, build_code_lines, format_cpp
+from generate_examples import generate_examples
 
 ROOT = Path(__file__).resolve().parent.parent
 STRIVER_ROOT = ROOT / "100 q by striver for tcsnqt"
@@ -74,7 +75,6 @@ def _pack_question(
     source: str,
     exam: str,
     problem_statement: str,
-    explanation: str,
     code: str,
     cx: dict,
 ) -> dict:
@@ -83,6 +83,9 @@ def _pack_question(
     code_lines, _ = build_code_lines(code, title, topics_str)
     annotated = annotate_cpp(code, title, topics_str)
     slug = re.sub(r"[^a-z0-9]+", "-", f"{edition}-{num}-{title}".lower()).strip("-")
+    examples_text, test_cases = generate_examples(
+        title, problem_statement, code, topics, edition
+    )
 
     return {
         "edition": edition,
@@ -96,7 +99,8 @@ def _pack_question(
         "source": source,
         "exam": exam,
         "problemStatement": problem_statement.strip(),
-        "explanation": explanation.strip(),
+        "examples": examples_text,
+        "testCases": test_cases,
         "code": formatted,
         "codeAnnotated": annotated,
         "codeLines": code_lines,
@@ -160,19 +164,15 @@ def parse_pyq_cpp(path: Path) -> dict:
         cx["time"] = "O(log N)"
         cx["note"] = "Required by problem statement."
 
-    full_explanation = explanation
-    if teaching:
-        full_explanation += "\n\n**How to approach:**\n" + teaching.replace("\n   ", "\n")
-    if input_fmt or output_fmt:
-        full_explanation += "\n\n**I/O:**\n"
-        if input_fmt:
-            full_explanation += f"- Input: {input_fmt}\n"
-        if output_fmt:
-            full_explanation += f"- Output: {output_fmt}\n"
-
     problem_statement = question
     if constraints:
         problem_statement += "\n\n**Constraints:**\n" + constraints
+    if input_fmt or output_fmt:
+        problem_statement += "\n\n**I/O format:**\n"
+        if input_fmt:
+            problem_statement += f"- Input: {input_fmt}\n"
+        if output_fmt:
+            problem_statement += f"- Output: {output_fmt}\n"
 
     return _pack_question(
         edition="pyq",
@@ -184,7 +184,6 @@ def parse_pyq_cpp(path: Path) -> dict:
         source=source or "Verified PYQ",
         exam=exam,
         problem_statement=problem_statement,
-        explanation=full_explanation,
         code=code,
         cx=cx,
     )
@@ -234,15 +233,6 @@ def parse_striver_cpp(path: Path) -> dict:
             else:
                 capture = False
 
-    explanation = (
-        "**Striver's TCS NQT 100 — study guide**\n"
-        + (f"**Category:** {category}\n" if category else "")
-        + (f"**Sheet topic:** {topic_label}\n\n" if topic_label else "\n")
-        + "**How to study this solution:**\n"
-        + "\n".join(f"- {s.lstrip('- ')}" for s in study if s)
-        + "\n\nRead the code on the right — important lines include comments from the original sheet."
-    )
-
     problem_statement = f"**{title}**\n\n"
     if topic_label:
         problem_statement += f"**Topic:** {topic_label} ({category})\n\n"
@@ -268,7 +258,6 @@ def parse_striver_cpp(path: Path) -> dict:
         source="Striver · TCS NQT 100",
         exam="",
         problem_statement=problem_statement,
-        explanation=explanation,
         code=code,
         cx=cx,
     )

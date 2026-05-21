@@ -34,6 +34,43 @@ function formatProse(text) {
     .replace(/\n/g, "<br>");
 }
 
+function renderExamples(item) {
+  const el = $("#detailExamples");
+  if (!el) return;
+
+  const cases = item.testCases || [];
+  if (!cases.length && item.examples) {
+    el.innerHTML = `<div class="prose">${formatProse(item.examples)}</div>`;
+    return;
+  }
+  if (!cases.length) {
+    el.innerHTML = '<p class="examples-empty">No examples generated for this problem yet.</p>';
+    return;
+  }
+
+  el.innerHTML = cases
+    .map(
+      (tc, i) => `
+    <article class="example-card">
+      <header class="example-card__head">
+        <span class="example-card__num">Example ${i + 1}</span>
+      </header>
+      <div class="example-io">
+        <div class="io-block">
+          <span class="io-label">Input</span>
+          <pre class="io-pre">${escapeHtml(tc.input)}</pre>
+        </div>
+        <div class="io-block">
+          <span class="io-label">Output</span>
+          <pre class="io-pre io-pre--out">${escapeHtml(tc.output)}</pre>
+        </div>
+      </div>
+      <p class="example-why"><strong>Why this output?</strong> ${escapeHtml(tc.why)}</p>
+    </article>`
+    )
+    .join("");
+}
+
 function difficultyClass(d) {
   return `pill pill-${(d || "medium").toLowerCase()}`;
 }
@@ -334,7 +371,7 @@ function showQuestion(edition, id) {
   $("#detailBadges").innerHTML = badges.join("");
 
   $("#detailProblem").innerHTML = formatProse(item.problemStatement);
-  $("#detailExplanation").innerHTML = formatProse(item.explanation);
+  renderExamples(item);
   $("#detailTime").textContent = item.timeComplexity;
   $("#detailSpace").textContent = item.spaceComplexity;
   $("#detailCxNote").textContent = item.complexityNote;
