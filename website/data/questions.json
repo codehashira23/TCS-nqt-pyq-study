@@ -1,0 +1,1340 @@
+[
+  {
+    "id": 1,
+    "slug": "01-odd-occurring-element-in-o-log-n",
+    "title": "Odd Occurring Element in O(log N)",
+    "filename": "01_Odd_Occurring_Element_in_O_log_N.cpp",
+    "difficulty": "Hard",
+    "topics": [
+      "Array",
+      "Binary Search"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an array of integers where every element appears an even number of times except one element which appears an odd number of times, find that odd-occurring element in O(log N) time. Equal elements appear in pairs and no element appears more than two times consecutively.\n\n**Constraints:**\n- 1 <= N <= 1000 for DP/backtracking style inputs; use modulo where asked.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n    int n; cin>>n; vector<long long>a(n); for(auto &x:a) cin>>x;\n    int l=0,r=n-1;\n    while(l<r){int m=l+(r-l)/2; if(m%2) m--;\n        if(m+1<n && a[m]==a[m+1]) l=m+2; else r=m;\n    }\n    cout<<a[l]<<\"\\n\";\n}",
+    "timeComplexity": "O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Required by problem statement."
+  },
+  {
+    "id": 2,
+    "slug": "02-count-subsets-with-given-sum",
+    "title": "Count Subsets with Given Sum",
+    "filename": "02_Count_Subsets_with_Given_Sum.cpp",
+    "difficulty": "Hard",
+    "topics": [
+      "Array",
+      "Dynamic Programming",
+      "Combinatorics"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an array of integers and a target sum S, count all subsets of the array whose elements sum equals S, and print the answer modulo 10^9+7.\n\n**Constraints:**\n- 1 <= N <= 1000 for DP/backtracking style inputs; use modulo where asked.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst long long MOD=1000000007LL;\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n    int n,s; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; cin>>s;\n    vector<long long> dp(s+1); dp[0]=1;\n    for(int x:a) for(int sum=s; sum>=x; --sum) dp[sum]=(dp[sum]+dp[sum-x])%MOD;\n    cout<<dp[s]<<\"\\n\";\n}",
+    "timeComplexity": "O(N * S)",
+    "spaceComplexity": "O(S)",
+    "complexityNote": "DP over target sum S."
+  },
+  {
+    "id": 3,
+    "slug": "03-chocolate-packets-move-empty-packets-to-end",
+    "title": "Chocolate Packets — Move Empty Packets to End",
+    "filename": "03_Chocolate_Packets_Move_Empty_Packets_to_End.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array",
+      "Two Pointers"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A factory produces N chocolate packets. Empty (defective) packets are represented as 0. Push all empty packets (0s) to the end of the array while maintaining the relative order of non-zero packets.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n    int n; cin>>n; vector<int>a(n); for(int &x:a) cin>>x;\n    int pos=0; for(int x:a) if(x!=0) a[pos++]=x; while(pos<n) a[pos++]=0;\n    for(int i=0;i<n;i++) cout<<a[i]<<(i+1==n?'\\n':' ');\n}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Single pass reordering (two pointers)."
+  },
+  {
+    "id": 4,
+    "slug": "04-covid-handshake-problem",
+    "title": "COVID Handshake Problem",
+    "filename": "04_COVID_Handshake_Problem.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Mathematics",
+      "Combinatorics"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Before the coronavirus outbreak, a meeting took place where everyone shook hands with everyone else exactly once. Given N people in the room, find the total number of handshakes.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; cout<<(n*(n-1))/2<<\"\\n\";}",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Closed-form combinatorics."
+  },
+  {
+    "id": 5,
+    "slug": "05-book-exchange-derangement-count",
+    "title": "Book Exchange — Derangement Count",
+    "filename": "05_Book_Exchange_Derangement_Count.cpp",
+    "difficulty": "Hard",
+    "topics": [
+      "Mathematics",
+      "Dynamic Programming",
+      "Combinatorics"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A teacher distributes N books to N students and wants to exchange them weekly so that every student gets a different book (not their own). Find the total number of valid exchanges (derangements) modulo 10^7+7.\n\n**Constraints:**\n- 1 <= N <= 1000 for DP/backtracking style inputs; use modulo where asked.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst long long MOD=10000007LL;\nint main(){int n; cin>>n; vector<long long>d(max(2,n+1)); d[0]=1; d[1]=0;\n    for(int i=2;i<=n;i++) d[i]=((i-1)*(d[i-1]+d[i-2]))%MOD;\n    cout<<d[n]<<\"\\n\";\n}",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Closed-form combinatorics."
+  },
+  {
+    "id": 6,
+    "slug": "06-xor-coin-denomination",
+    "title": "XOR Coin Denomination",
+    "filename": "06_XOR_Coin_Denomination.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Bit Manipulation",
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A shopkeeper has coins of several denominations. Initially there are an even number of coins of each type. One coin is lost. Given the list of remaining coins, find the denomination of the lost coin.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n    int n; cin>>n; long long ans=0,x; while(n-- && cin>>x) ans^=x; cout<<ans<<\"\\n\";\n}",
+    "timeComplexity": "O(N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Bit manipulation on integers."
+  },
+  {
+    "id": 7,
+    "slug": "07-income-expenditure-and-savings-tracker",
+    "title": "Income, Expenditure and Savings Tracker",
+    "filename": "07_Income_Expenditure_and_Savings_Tracker.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Simulation",
+      "Maps"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Continuously take user input for income amount, type of material (category of expenditure), and expenditure on that material until the user enters \"done\". Then display total income, total savings (income minus total expenditure), and the list of where money was spent with respective amounts.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n    double totalIncome=0,totalExpense=0; map<string,double> spent; string category;\n    while(cin>>category && category!=\"done\"){double income,expense; cin>>income>>expense;\n        totalIncome+=income; totalExpense+=expense; spent[category]+=expense;\n    }\n    cout<<\"Total Income: \"<<fixed<<setprecision(2)<<totalIncome<<\"\\n\";\n    cout<<\"Total Savings: \"<<totalIncome-totalExpense<<\"\\n\";\n    for(auto &p:spent) cout<<p.first<<\" \"<<p.second<<\"\\n\";\n}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 8,
+    "slug": "08-reverse-words-in-a-sentence",
+    "title": "Reverse Words in a Sentence",
+    "filename": "08_Reverse_Words_in_a_Sentence.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a sentence, reverse each word individually while keeping the word order intact.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n    string s; \n    getline(cin,s); \n    stringstream ss(s); \n    string w; \n    bool first=true;\n    while(ss>>w)\n    { \n        reverse(w.begin(),w.end()); \n        if(!first) \n        cout<<\" \"; \n        cout<<w; \n        first=false; \n    }\n    cout<<\"\\n\";\n}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 9,
+    "slug": "09-count-vowels-consonants-spaces-and-special-characters",
+    "title": "Count Vowels, Consonants, Spaces and Special Characters",
+    "filename": "09_Count_Vowels_Consonants_Spaces_and_Special_Characters.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a string, count the number of vowels, consonants, spaces, and special characters.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string s; getline(cin,s); int v=0,c=0,sp=0,special=0;\n    string vowels=\"aeiouAEIOU\";\n    for(unsigned char ch:s){ if(ch==' ') sp++; else if(isalpha(ch)){ if(vowels.find(ch)!=string::npos) v++; else c++; } else special++; }\n    cout<<\"Vowels: \"<<v<<\"\\nConsonants: \"<<c<<\"\\nSpaces: \"<<sp<<\"\\nSpecial Characters: \"<<special<<\"\\n\";\n}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 10,
+    "slug": "10-check-palindrome-case-insensitive",
+    "title": "Check Palindrome (Case-Insensitive)",
+    "filename": "10_Check_Palindrome_Case_Insensitive.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a string, check if it is a palindrome while ignoring spaces and case.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string s,t; getline(cin,s);\n    for(unsigned char ch:s) if(!isspace(ch)) t.push_back((char)tolower(ch));\n    string r=t; reverse(r.begin(),r.end()); cout<<(t==r?\"Palindrome\":\"Not Palindrome\")<<\"\\n\";\n}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 11,
+    "slug": "11-armstrong-number-check",
+    "title": "Armstrong Number Check",
+    "filename": "11_Armstrong_Number_Check.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A number is an Armstrong number if the sum of its own digits each raised to the power of the number of digits equals the original number. Determine if a given number is an Armstrong number.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; string s=to_string(n); long long sum=0;\n    for(char ch:s){ long long d=ch-'0', p=1; for(size_t i=0;i<s.size();i++) p*=d; sum+=p; }\n    cout<<(sum==n?\"Armstrong\":\"Not Armstrong\")<<\"\\n\";\n}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 12,
+    "slug": "12-second-largest-number-in-array",
+    "title": "Second Largest Number in Array",
+    "filename": "12_Second_Largest_Number_in_Array.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an array of N integers, find the second largest distinct element.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; long long first=LLONG_MIN,second=LLONG_MIN,x;\n    while(n--){cin>>x; if(x>first){second=first; first=x;} else if(x<first && x>second) second=x;}\n    if(second==LLONG_MIN) cout<<\"No second largest\\n\"; else cout<<second<<\"\\n\";\n}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 13,
+    "slug": "13-leap-year-check",
+    "title": "Leap Year Check",
+    "filename": "13_Leap_Year_Check.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a year Y, determine whether it is a leap year or not based on the standard Gregorian calendar rules.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int y; cin>>y; cout<<(((y%400==0)||(y%4==0&&y%100!=0))?\"Leap Year\":\"Not Leap Year\")<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 14,
+    "slug": "14-binary-number-conversion",
+    "title": "Binary Number Conversion",
+    "filename": "14_Binary_Number_Conversion.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Number System"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a decimal number N, convert it to its binary representation.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; if(n==0){cout<<0<<\"\\n\"; return 0;} string b; while(n){b.push_back('0'+n%2); n/=2;} reverse(b.begin(),b.end()); cout<<b<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 15,
+    "slug": "15-gcd-and-lcm",
+    "title": "GCD and LCM",
+    "filename": "15_GCD_and_LCM.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given two integers, find their Greatest Common Divisor (GCD) and Least Common Multiple (LCM).\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long a,b; cin>>a>>b; long long g=__gcd(a,b); cout<<\"GCD = \"<<g<<\"\\nLCM = \"<<(a/g)*b<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 16,
+    "slug": "16-digit-sum-until-single-digit",
+    "title": "Digit Sum Until Single Digit",
+    "filename": "16_Digit_Sum_Until_Single_Digit.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a number N, repeatedly sum its digits until the result is a single digit, and print that digit.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; cout<<(n==0?0:1+(n-1)%9)<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 17,
+    "slug": "17-average-sales-calculation",
+    "title": "Average Sales Calculation",
+    "filename": "17_Average_Sales_Calculation.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math",
+      "Simulation"
+    ],
+    "source": "Verified PYQ",
+    "exam": "26 April 2024 Shift 1",
+    "problemStatement": "A shopkeeper has N items for sale. Each item has a name, price per unit, and quantity. Calculate the average sales value across all items where sales for an item is price * quantity.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; double total=0; for(int i=0;i<n;i++){string name; double price,qty; cin>>name>>price>>qty; total+=price*qty;} cout<<fixed<<setprecision(2)<<total/n<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 18,
+    "slug": "18-number-pattern-series-interleaved-a-and-b",
+    "title": "Number Pattern Series (Interleaved A and B)",
+    "filename": "18_Number_Pattern_Series_Interleaved_A_and_B.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math",
+      "Series"
+    ],
+    "source": "Verified PYQ",
+    "exam": "26 April 2024 Shift 2",
+    "problemStatement": "Two number series are interleaved: Series A = 1,2,3,... and Series B = 1,4,9,16,... (squares). The merged sequence is: 1,1,2,4,3,9,4,16,5,25,... Given N, find the Nth term of the merged series.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; long long k=(n+1)/2; cout<<(n%2?k:k*k)<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Iterate terms or use closed form."
+  },
+  {
+    "id": 19,
+    "slug": "19-smallest-number-in-array",
+    "title": "Smallest Number in Array",
+    "filename": "19_Smallest_Number_in_Array.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "29 April 2024 Shift 1",
+    "problemStatement": "Given an array of N integers, find the smallest element in the array.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; long long mn=LLONG_MAX,x; while(n--){cin>>x; mn=min(mn,x);} cout<<mn<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Default linear scan unless proven otherwise."
+  },
+  {
+    "id": 20,
+    "slug": "20-sorting-algorithm-bubble-sort",
+    "title": "Sorting Algorithm (Bubble Sort)",
+    "filename": "20_Sorting_Algorithm_Bubble_Sort.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Sorting",
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "3 May 2024 Shift 1",
+    "problemStatement": "Sort an array of N integers in ascending order using the Bubble Sort algorithm.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; for(int i=0;i<n;i++) for(int j=0;j+1<n-i;j++) if(a[j]>a[j+1]) swap(a[j],a[j+1]); for(int i=0;i<n;i++) cout<<a[i]<<(i+1==n?'\\n':' ');}",
+    "timeComplexity": "O(N^2)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Adjacent swaps until sorted."
+  },
+  {
+    "id": 21,
+    "slug": "21-prime-number-check",
+    "title": "Prime Number Check",
+    "filename": "21_Prime_Number_Check.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "8 May 2024 Shift 2",
+    "problemStatement": "Given a number N, check whether it is a prime number.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; bool ok=n>1; for(long long d=2; d*d<=n && ok; d++) if(n%d==0) ok=false; cout<<(ok?\"Prime\":\"Not Prime\")<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 22,
+    "slug": "22-remove-duplicates-from-array",
+    "title": "Remove Duplicates from Array",
+    "filename": "22_Remove_Duplicates_from_Array.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "9 May 2024 Shift 1",
+    "problemStatement": "Remove all duplicate elements from an array and print the unique elements in the order they first appeared.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<long long>a(n); unordered_set<long long> seen; vector<long long> ans; for(auto &x:a){cin>>x; if(!seen.count(x)){seen.insert(x); ans.push_back(x);}} for(size_t i=0;i<ans.size();i++) cout<<ans[i]<<(i+1==ans.size()?'\\n':' ');}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 23,
+    "slug": "23-fibonacci-series-nth-term",
+    "title": "Fibonacci Series — Nth Term",
+    "filename": "23_Fibonacci_Series_Nth_Term.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Dynamic Programming",
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "14 May 2024 Shift 1",
+    "problemStatement": "Find the Nth Fibonacci number where F(1)=1, F(2)=1, and F(N)=F(N-1)+F(N-2).\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; long long a=1,b=1; if(n<=2){cout<<1<<\"\\n\"; return 0;} for(int i=3;i<=n;i++){long long c=a+b; a=b; b=c;} cout<<b<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Iterate terms or use closed form."
+  },
+  {
+    "id": 24,
+    "slug": "24-pattern-right-angle-triangle-of-numbers",
+    "title": "Pattern: Right-Angle Triangle of Numbers",
+    "filename": "24_Pattern_Right_Angle_Triangle_of_Numbers.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Pattern Printing"
+    ],
+    "source": "Verified PYQ",
+    "exam": "14 May 2024 Shift 2",
+    "problemStatement": "Print a right-angled triangle pattern of numbers for N rows, where row i contains numbers from 1 to i.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; for(int i=1;i<=n;i++){for(int j=1;j<=i;j++) cout<<j<<(j==i?'\\n':' ');}}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Iterate terms or use closed form."
+  },
+  {
+    "id": 25,
+    "slug": "25-rotate-array-left-by-k-positions",
+    "title": "Rotate Array Left by K Positions",
+    "filename": "25_Rotate_Array_Left_by_K_Positions.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given an array of N elements, rotate it to the left by K positions.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; int k; cin>>k; k%=n; reverse(a.begin(),a.begin()+k); reverse(a.begin()+k,a.end()); reverse(a.begin(),a.end()); for(int i=0;i<n;i++) cout<<a[i]<<(i+1==n?'\\n':' ');}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 26,
+    "slug": "26-find-missing-number-in-1-to-n-plus-1",
+    "title": "Find Missing Number in 1 to N+1",
+    "filename": "26_Find_Missing_Number_in_1_to_N_plus_1.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array",
+      "Math"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "An array contains N distinct integers taken from the range 1 to N+1 with exactly one number missing. Find the missing number.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; long long expected=(n+1)*(n+2)/2, sum=0,x; for(int i=0;i<n;i++){cin>>x; sum+=x;} cout<<expected-sum<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 27,
+    "slug": "27-sort-array-of-0s-1s-and-2s-dutch-national-flag",
+    "title": "Sort Array of 0s, 1s and 2s (Dutch National Flag)",
+    "filename": "27_Sort_Array_of_0s_1s_and_2s_Dutch_National_Flag.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array",
+      "Two Pointers"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Sort an array containing only 0s, 1s, and 2s in a single traversal without using extra space.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; int l=0,m=0,h=n-1; while(m<=h){if(a[m]==0) swap(a[l++],a[m++]); else if(a[m]==1) m++; else swap(a[m],a[h--]);} for(int i=0;i<n;i++) cout<<a[i]<<(i+1==n?'\\n':' ');}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Single pass reordering (two pointers)."
+  },
+  {
+    "id": 28,
+    "slug": "28-maximum-subarray-sum-kadane-s-algorithm",
+    "title": "Maximum Subarray Sum (Kadane's Algorithm)",
+    "filename": "28_Maximum_Subarray_Sum_Kadane_s_Algorithm.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array",
+      "Dynamic Programming"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given an array of integers (possibly containing negative values), find the sum of the contiguous subarray with the maximum sum.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; long long best=LLONG_MIN,cur=0,x; while(n--){cin>>x; cur=max(x,cur+x); best=max(best,cur);} cout<<best<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Single pass tracking best subarray."
+  },
+  {
+    "id": 29,
+    "slug": "29-check-if-two-strings-are-anagrams",
+    "title": "Check if Two Strings are Anagrams",
+    "filename": "29_Check_if_Two_Strings_are_Anagrams.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given two strings, check if they are anagrams of each other, meaning both contain the same characters with the same frequencies.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string a,b; getline(cin,a); getline(cin,b); array<int,256> f{}; for(unsigned char c:a) if(!isspace(c)) f[tolower(c)]++; for(unsigned char c:b) if(!isspace(c)) f[tolower(c)]--; cout<<(all_of(f.begin(),f.end(),[](int x){return x==0;})?\"Anagram\":\"Not Anagram\")<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 30,
+    "slug": "30-longest-substring-without-repeating-characters",
+    "title": "Longest Substring Without Repeating Characters",
+    "filename": "30_Longest_Substring_Without_Repeating_Characters.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "String",
+      "Sliding Window"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given a string, find the length of the longest substring that has no repeating characters.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string s; getline(cin,s); vector<int> last(256,-1); int start=0,best=0; for(int i=0;i<(int)s.size();i++){unsigned char c=s[i]; start=max(start,last[c]+1); best=max(best,i-start+1); last[c]=i;} cout<<best<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 31,
+    "slug": "31-find-maximum-occurring-character",
+    "title": "Find Maximum Occurring Character",
+    "filename": "31_Find_Maximum_Occurring_Character.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given a string, find the character that appears most frequently. If there is a tie, print the lexicographically smallest character.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string s; getline(cin,s); map<char,int> f; for(char c:s) if(!isspace((unsigned char)c)) f[c]++; char ans=0; int best=-1; for(auto &p:f) if(p.second>best){best=p.second; ans=p.first;} cout<<ans<<\"\\n\";}",
+    "timeComplexity": "O(V + E)",
+    "spaceComplexity": "O(V)",
+    "complexityNote": "Adjacency traversal."
+  },
+  {
+    "id": 32,
+    "slug": "32-pascal-s-triangle",
+    "title": "Pascal's Triangle",
+    "filename": "32_Pascal_s_Triangle.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Math",
+      "Dynamic Programming"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Print Pascal's Triangle for N rows.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<long long> row; for(int i=0;i<n;i++){row.push_back(1); for(int j=i-1;j>0;j--) row[j]+=row[j-1]; for(int j=0;j<=i;j++) cout<<row[j]<<(j==i?'\\n':' ');}}",
+    "timeComplexity": "O(N * K)",
+    "spaceComplexity": "O(K)",
+    "complexityNote": "State over items and parameter K."
+  },
+  {
+    "id": 33,
+    "slug": "33-sum-of-digits-of-a-number",
+    "title": "Sum of Digits of a Number",
+    "filename": "33_Sum_of_Digits_of_a_Number.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given a number N, find the sum of all its digits.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; int sum=0; n=llabs(n); while(n){sum+=n%10; n/=10;} cout<<sum<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 34,
+    "slug": "34-sieve-of-eratosthenes-all-primes-up-to-n",
+    "title": "Sieve of Eratosthenes — All Primes up to N",
+    "filename": "34_Sieve_of_Eratosthenes_All_Primes_up_to_N.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Math",
+      "Prime",
+      "Sieve"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Print all prime numbers from 2 to N using the Sieve of Eratosthenes.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<bool> prime(n+1,true); if(n>=0) prime[0]=false; if(n>=1) prime[1]=false; for(long long p=2;p*p<=n;p++) if(prime[p]) for(long long q=p*p;q<=n;q+=p) prime[q]=false; for(int i=2;i<=n;i++) if(prime[i]) cout<<i<<\" \"; cout<<\"\\n\";}",
+    "timeComplexity": "O(N log log N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Mark multiples of each prime."
+  },
+  {
+    "id": 35,
+    "slug": "35-subset-sum-problem-dp",
+    "title": "Subset Sum Problem (DP)",
+    "filename": "35_Subset_Sum_Problem_DP.cpp",
+    "difficulty": "Hard",
+    "topics": [
+      "Array",
+      "Dynamic Programming"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an array of integers and a target sum S, determine if there exists a subset with sum exactly equal to S.\n\n**Constraints:**\n- 1 <= N <= 1000 for DP/backtracking style inputs; use modulo where asked.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n,s; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; cin>>s; vector<char> dp(s+1); dp[0]=1; for(int x:a) for(int j=s;j>=x;j--) dp[j]|=dp[j-x]; cout<<(dp[s]?\"true\":\"false\")<<\"\\n\";}",
+    "timeComplexity": "O(N * S)",
+    "spaceComplexity": "O(S)",
+    "complexityNote": "DP over target sum S."
+  },
+  {
+    "id": 36,
+    "slug": "36-longest-common-subsequence-lcs",
+    "title": "Longest Common Subsequence (LCS)",
+    "filename": "36_Longest_Common_Subsequence_LCS.cpp",
+    "difficulty": "Hard",
+    "topics": [
+      "Dynamic Programming",
+      "String"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given two strings, find the length of their Longest Common Subsequence (LCS).\n\n**Constraints:**\n- 1 <= N <= 1000 for DP/backtracking style inputs; use modulo where asked.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string a,b; cin>>a>>b; vector<int> prev(b.size()+1),cur(b.size()+1); for(char x:a){for(size_t j=1;j<=b.size();j++) cur[j]=(x==b[j-1]?1+prev[j-1]:max(prev[j],cur[j-1])); swap(prev,cur);} cout<<prev[b.size()]<<\"\\n\";}",
+    "timeComplexity": "O(N*M)",
+    "spaceComplexity": "O(N*M)",
+    "complexityNote": "2D DP over both strings."
+  },
+  {
+    "id": 37,
+    "slug": "37-minimum-coin-change",
+    "title": "Minimum Coin Change",
+    "filename": "37_Minimum_Coin_Change.cpp",
+    "difficulty": "Hard",
+    "topics": [
+      "Dynamic Programming"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given a set of coin denominations and a target amount, find the minimum number of coins required to make up the amount. Assume unlimited coins of each denomination.\n\n**Constraints:**\n- 1 <= N <= 1000 for DP/backtracking style inputs; use modulo where asked.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n,amt; cin>>n; vector<int> c(n); for(int &x:c) cin>>x; cin>>amt; const int INF=1e9; vector<int> dp(amt+1,INF); dp[0]=0; for(int x:c) for(int j=x;j<=amt;j++) dp[j]=min(dp[j],dp[j-x]+1); cout<<(dp[amt]>=INF?-1:dp[amt])<<\"\\n\";}",
+    "timeComplexity": "O(N * S)",
+    "spaceComplexity": "O(S)",
+    "complexityNote": "DP over target sum S."
+  },
+  {
+    "id": 38,
+    "slug": "38-cycle-detection-in-linked-list-floyd-s-algorithm",
+    "title": "Cycle Detection in Linked List (Floyd's Algorithm)",
+    "filename": "38_Cycle_Detection_in_Linked_List_Floyd_s_Algorithm.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Linked List"
+    ],
+    "source": "Practice",
+    "exam": "",
+    "problemStatement": "Given a singly linked list, detect whether it contains a cycle. Print \"Cycle Detected\" if there is a cycle, otherwise print \"No Cycle\".\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Node{int data; Node*next; Node(int x):data(x),next(nullptr){}}; int main(){int n,pos; cin>>n>>pos; vector<Node*> nodes; for(int i=0,x;i<n;i++){cin>>x; nodes.push_back(new Node(x)); if(i) nodes[i-1]->next=nodes[i];} if(pos>=0&&pos<n) nodes.back()->next=nodes[pos]; Node *slow=nodes[0],*fast=nodes[0]; bool cycle=false; while(fast&&fast->next){slow=slow->next; fast=fast->next->next; if(slow==fast){cycle=true; break;}} cout<<(cycle?\"Cycle Detected\":\"No Cycle\")<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Slow/fast pointers meet if cycle exists."
+  },
+  {
+    "id": 39,
+    "slug": "39-closest-multiple-of-y-to-x",
+    "title": "Closest Multiple of Y to X",
+    "filename": "39_Closest_Multiple_of_Y_to_X.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "8 May 2024 (Basic)",
+    "problemStatement": "Given two integers X and Y, find the multiple of Y that is closest to X. If there are two equally close multiples, return the larger one.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long x,y; cin>>x>>y; long long q=x/y, a=q*y, b=(q+1)*y; cout<<(llabs(x-b)<=llabs(x-a)?b:a)<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Default linear scan unless proven otherwise."
+  },
+  {
+    "id": 40,
+    "slug": "40-password-validator-plus-caesar-cipher",
+    "title": "Password Validator + Caesar Cipher",
+    "filename": "40_Password_Validator_plus_Caesar_Cipher.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "String",
+      "Validation",
+      "Cipher"
+    ],
+    "source": "Verified PYQ",
+    "exam": "8 May 2024 (Advanced)",
+    "problemStatement": "Take a string 'password' as input and first validate it according to several rules. If valid, apply a Caesar Cipher shift by N positions on letters and digits and output the encrypted string. If invalid, print \"Error!\".\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool valid(const string& s){bool upper=false,digit=false; if(s.size()<4||isdigit((unsigned char)s[0])) return false; for(char c:s){if(c==' '||c=='/') return false; upper|=isupper((unsigned char)c); digit|=isdigit((unsigned char)c);} return upper&&digit;}\nchar shiftChar(char c,int k){if(isupper((unsigned char)c)) return char('A'+(c-'A'+k)%26); if(islower((unsigned char)c)) return char('a'+(c-'a'+k)%26); if(isdigit((unsigned char)c)) return char('0'+(c-'0'+k)%10); return c;}\nint main(){string s; int k; getline(cin,s); cin>>k; if(!valid(s)){cout<<\"Error!\\n\"; return 0;} for(char &c:s) c=shiftChar(c,k); cout<<s<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 41,
+    "slug": "41-all-subarrays-with-sum-equal-to-k",
+    "title": "All Subarrays with Sum Equal to K",
+    "filename": "41_All_Subarrays_with_Sum_Equal_to_K.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array",
+      "Prefix Sum"
+    ],
+    "source": "Verified PYQ",
+    "exam": "26 April 2024",
+    "problemStatement": "Given an array of integers and a value K, find and print all contiguous subarrays whose sum equals K. The input format uses a comma to separate the list from K.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n,k; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; cin>>k; bool found=false; for(int l=0;l<n;l++){long long sum=0; for(int r=l;r<n;r++){sum+=a[r]; if(sum==k){found=true; for(int i=l;i<=r;i++) cout<<a[i]<<(i==r?'\\n':' ');}}} if(!found) cout<<\"No subarray found\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Prefix sum or sliding window."
+  },
+  {
+    "id": 42,
+    "slug": "42-fibonacci-sum-up-to-n-terms",
+    "title": "Fibonacci Sum up to N Terms",
+    "filename": "42_Fibonacci_Sum_up_to_N_Terms.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math",
+      "Dynamic Programming"
+    ],
+    "source": "Verified PYQ",
+    "exam": "29 April 2024 Kolkata Q1",
+    "problemStatement": "Generate the Fibonacci series and find the sum of its elements up to N terms. F(1)=1, F(2)=1, F(n)=F(n-1)+F(n-2).\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; long long a=1,b=1,sum=0; for(int i=1;i<=n;i++){long long cur=(i<=2?1:a+b); if(i>2){a=b; b=cur;} sum+=cur;} cout<<sum<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Iterate terms or use closed form."
+  },
+  {
+    "id": 43,
+    "slug": "43-distinct-bitwise-or-of-subarrays",
+    "title": "Distinct Bitwise OR of Subarrays",
+    "filename": "43_Distinct_Bitwise_OR_of_Subarrays.cpp",
+    "difficulty": "Hard",
+    "topics": [
+      "Bit Manipulation",
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "29 April 2024 Kolkata Q2",
+    "problemStatement": "Given an integer array, find the number of distinct values that can be obtained as the bitwise OR of any contiguous subarray.\n\n**Constraints:**\n- 1 <= N <= 1000 for DP/backtracking style inputs; use modulo where asked.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; unordered_set<int> all,prev,cur; for(int i=0,x;i<n;i++){cin>>x; cur.clear(); cur.insert(x); for(int v:prev) cur.insert(v|x); for(int v:cur) all.insert(v); prev=cur;} cout<<all.size()<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 44,
+    "slug": "44-two-wheeler-and-four-wheeler-production",
+    "title": "Two-Wheeler and Four-Wheeler Production",
+    "filename": "44_Two_Wheeler_and_Four_Wheeler_Production.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "An automobile company manufactures two-wheelers (TW) and four-wheelers (FW). Given the total number of vehicles V and the total number of wheels W, determine how many TW and FW are manufactured. If the inputs do not yield a valid solution, print \"INVALID INPUT\".\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long v,w; cin>>v>>w; long long fw=(w-2*v)/2, tw=v-fw; if(w%2||fw<0||tw<0||tw+fw!=v) cout<<\"INVALID INPUT\\n\"; else cout<<\"TW = \"<<tw<<\"\\nFW = \"<<fw<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Default linear scan unless proven otherwise."
+  },
+  {
+    "id": 45,
+    "slug": "45-mpcs-fitness-test-average-oxygen-level-of-trainees",
+    "title": "MPCS Fitness Test — Average Oxygen Level of Trainees",
+    "filename": "45_MPCS_Fitness_Test_Average_Oxygen_Level_of_Trainees.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Arrays"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A batch of 3 trainees runs for 3 rounds. Record their oxygen level after every round (must be between 1 and 100). After all rounds, calculate each trainee's average oxygen level and select the trainee(s) with the highest average as \"most fit\". If all averages are below 70, declare \"All trainees are unfit.\"\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int a[3]={0,0,0}; for(int r=0;r<3;r++) for(int t=0;t<3;t++){int x; cin>>x; if(x<1||x>100){cout<<\"Invalid input\\n\"; return 0;} a[t]+=x;} int best=max({a[0],a[1],a[2]}); if(best/3<70) cout<<\"All trainees are unfit.\\n\"; else for(int i=0;i<3;i++) if(a[i]==best) cout<<\"Trainee Number: \"<<i+1<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 46,
+    "slug": "46-caesar-cipher-with-digits",
+    "title": "Caesar Cipher (With Digits)",
+    "filename": "46_Caesar_Cipher_With_Digits.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "String",
+      "Cipher"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Implement a Caesar Cipher that works on both alphabets and digits. Given a plaintext string and a key K, shift letters (uppercase and lowercase) and digits by K positions with wrap-around. Special characters remain unchanged.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool valid(const string& s){bool upper=false,digit=false; if(s.size()<4||isdigit((unsigned char)s[0])) return false; for(char c:s){if(c==' '||c=='/') return false; upper|=isupper((unsigned char)c); digit|=isdigit((unsigned char)c);} return upper&&digit;}\nchar shiftChar(char c,int k){if(isupper((unsigned char)c)) return char('A'+(c-'A'+k)%26); if(islower((unsigned char)c)) return char('a'+(c-'a'+k)%26); if(isdigit((unsigned char)c)) return char('0'+(c-'0'+k)%10); return c;}\nint main(){string s; int k; getline(cin,s); cin>>k; if(!valid(s)){cout<<\"Error!\\n\"; return 0;} for(char &c:s) c=shiftChar(c,k); cout<<s<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 47,
+    "slug": "47-matrix-addition",
+    "title": "Matrix Addition",
+    "filename": "47_Matrix_Addition.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Matrix"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given two N x M matrices A and B of the same size, compute their sum matrix C where C[i][j] = A[i][j] + B[i][j].\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N M, then N*M integers of matrix A, then N*M integers of matrix B.\n- Output: The sum matrix, one row per line.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n,m; cin>>n>>m; vector<vector<int>> a(n,vector<int>(m)),b=a; for(auto &r:a) for(int &x:r) cin>>x; for(auto &r:b) for(int &x:r) cin>>x; for(int i=0;i<n;i++){for(int j=0;j<m;j++) cout<<a[i][j]+b[i][j]<<(j+1==m?'\\n':' ');}}",
+    "timeComplexity": "O(N*M)",
+    "spaceComplexity": "O(N*M)",
+    "complexityNote": "Visit each matrix cell once."
+  },
+  {
+    "id": 48,
+    "slug": "48-reverse-a-string-without-built-in-functions",
+    "title": "Reverse a String Without Built-In Functions",
+    "filename": "48_Reverse_a_String_Without_Built_In_Functions.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Reverse a given string without using any built-in reverse methods or slicing.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string s; getline(cin,s); for(int l=0,r=(int)s.size()-1;l<r;l++,r--) swap(s[l],s[r]); cout<<s<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 49,
+    "slug": "49-check-if-number-is-perfect",
+    "title": "Check if Number is Perfect",
+    "filename": "49_Check_if_Number_is_Perfect.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A perfect number equals the sum of its proper divisors (excluding itself). Check if a given number N is perfect.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; if(n<=1){cout<<\"false\\n\"; return 0;} long long sum=1; for(long long d=2;d*d<=n;d++) if(n%d==0){sum+=d; if(d*d!=n) sum+=n/d;} cout<<(sum==n?\"true\":\"false\")<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 50,
+    "slug": "50-count-frequency-of-each-element-in-array",
+    "title": "Count Frequency of Each Element in Array",
+    "filename": "50_Count_Frequency_of_Each_Element_in_Array.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array",
+      "Hash Map"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an array of N integers, count and print the frequency of each unique element in the order in which they first appear.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<long long> order; unordered_map<long long,int> f; for(int i=0;i<n;i++){long long x; cin>>x; if(!f.count(x)) order.push_back(x); f[x]++;} for(long long x:order) cout<<x<<\" \"<<f[x]<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 51,
+    "slug": "51-weekly-exercise-summary",
+    "title": "Weekly Exercise Summary",
+    "filename": "51_Weekly_Exercise_Summary.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Simulation"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Design a weekly exercise summary. Given the number of minutes of daily exercise for 7 consecutive days, calculate the total exercise duration for the week and the average daily workout duration.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){double total=0,x; for(int i=0;i<7;i++){cin>>x; total+=x;} cout<<\"Total: \"<<total<<\"\\nAverage: \"<<fixed<<setprecision(2)<<total/7<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 52,
+    "slug": "52-count-palindrome-numbers-in-range-m-to-n",
+    "title": "Count Palindrome Numbers in Range M to N",
+    "filename": "52_Count_Palindrome_Numbers_in_Range_M_to_N.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given two integers M and N (M <= N), count how many numbers in the inclusive range [M, N] are palindromes.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool pal(long long x){string s=to_string(x),r=s; reverse(r.begin(),r.end()); return s==r;} int main(){long long m,n; cin>>m>>n; int cnt=0; for(long long x=m;x<=n;x++) cnt+=pal(x); cout<<cnt<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Linear scan or in-place reversal."
+  },
+  {
+    "id": 53,
+    "slug": "53-train-travel-time-on-bridge",
+    "title": "Train Travel Time on Bridge",
+    "filename": "53_Train_Travel_Time_on_Bridge.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math",
+      "Physics"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A train covers a total distance of 800 meters (train length plus bridge length). Given the speed of the train in km/hr, calculate the time taken to completely cross the bridge in seconds.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){double kmph; cin>>kmph; double mps=kmph*5.0/18.0; cout<<fixed<<setprecision(2)<<800.0/mps<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Default linear scan unless proven otherwise."
+  },
+  {
+    "id": 54,
+    "slug": "54-split-array-with-equal-averages",
+    "title": "Split Array with Equal Averages",
+    "filename": "54_Split_Array_with_Equal_Averages.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array",
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an array of N integers, check if it can be split into two non-empty contiguous parts such that both parts have equal averages. Print \"true\" if possible, otherwise print \"false\".\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<double>a(n),pref(n+1); for(int i=0;i<n;i++){cin>>a[i]; pref[i+1]=pref[i]+a[i];} bool ok=false; for(int i=1;i<n;i++) if(fabs(pref[i]/i-(pref[n]-pref[i])/(n-i))<1e-9) ok=true; cout<<(ok?\"true\":\"false\")<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 55,
+    "slug": "55-perfect-donation-amount",
+    "title": "Perfect Donation Amount",
+    "filename": "55_Perfect_Donation_Amount.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A charity accepts donations only in \"perfect\" amounts. A perfect number equals the sum of its proper divisors (excluding itself). Given a donation amount N, check if it is perfect and print true or false.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; if(n<=1){cout<<\"false\\n\"; return 0;} long long sum=1; for(long long d=2;d*d<=n;d++) if(n%d==0){sum+=d; if(d*d!=n) sum+=n/d;} cout<<(sum==n?\"true\":\"false\")<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 56,
+    "slug": "56-inventory-frequency-counter",
+    "title": "Inventory Frequency Counter",
+    "filename": "56_Inventory_Frequency_Counter.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String",
+      "Hash Map"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a string of space-separated item names (inventory), count how many times each item appears. If the input contains any digit, print \"Invalid input\" and stop.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string line,item; getline(cin,line); for(char c:line) if(isdigit((unsigned char)c)){cout<<\"Invalid input\\n\"; return 0;} stringstream ss(line); map<string,int> f; while(ss>>item) f[item]++; for(auto &p:f) cout<<p.first<<\" \"<<p.second<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 57,
+    "slug": "57-calculate-speed-from-distance-and-time",
+    "title": "Calculate Speed from Distance and Time",
+    "filename": "57_Calculate_Speed_from_Distance_and_Time.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math",
+      "Physics"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A car travels a fixed distance of 1000 meters. Given the time taken in seconds, calculate the speed of the car in km/hr.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){double sec; cin>>sec; cout<<fixed<<setprecision(2)<<(1000.0/sec)*3.6<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Default linear scan unless proven otherwise."
+  },
+  {
+    "id": 58,
+    "slug": "58-jump-game-can-you-reach-the-end",
+    "title": "Jump Game — Can You Reach the End?",
+    "filename": "58_Jump_Game_Can_You_Reach_the_End.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array",
+      "Greedy"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an array where each element represents the maximum number of steps you can jump forward from that position, determine if you can reach the last index starting from index 0.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; int reach=0; for(int i=0;i<n&&i<=reach;i++) reach=max(reach,i+a[i]); cout<<(reach>=n-1?\"true\":\"false\")<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Track farthest reachable index."
+  },
+  {
+    "id": 59,
+    "slug": "59-count-subarrays-with-sum-k",
+    "title": "Count Subarrays with Sum = K",
+    "filename": "59_Count_Subarrays_with_Sum_K.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array",
+      "Hash Map",
+      "Prefix Sum"
+    ],
+    "source": "Verified PYQ",
+    "exam": "6 May 2024 Shift 1",
+    "problemStatement": "Given a sequence of integers nums and an integer K, find the total count of contiguous subarrays whose elements sum equals exactly K.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n,k; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; cin>>k; unordered_map<long long,int> f; f[0]=1; long long sum=0,ans=0; for(int x:a){sum+=x; ans+=f[sum-k]; f[sum]++;} cout<<ans<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Prefix sum or sliding window."
+  },
+  {
+    "id": 60,
+    "slug": "60-first-non-repeating-character",
+    "title": "First Non-Repeating Character",
+    "filename": "60_First_Non_Repeating_Character.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "String"
+    ],
+    "source": "Verified PYQ",
+    "exam": "6 May 2024 Shift 2",
+    "problemStatement": "Given a string, find the first character that does not repeat. If all characters repeat, print -1.\n\n**Constraints:**\n- 1 <= length of string <= 100000.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The string input described in the question.\n- Output: The required string/count/result.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string s; getline(cin,s); vector<int> f(256); for(unsigned char c:s) f[c]++; for(char c:s) if(f[(unsigned char)c]==1){cout<<c<<\"\\n\"; return 0;} cout<<-1<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 61,
+    "slug": "61-toggle-bits-number-of-bits-to-flip",
+    "title": "Toggle Bits — Number of Bits to Flip",
+    "filename": "61_Toggle_Bits_Number_of_Bits_to_Flip.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Bit Manipulation"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given two integers A and B, find the number of bits that need to be flipped to convert A to B. This is the number of set bits in A XOR B.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){unsigned int a,b; cin>>a>>b; cout<<__builtin_popcount(a^b)<<\"\\n\";}",
+    "timeComplexity": "O(N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Bit manipulation on integers."
+  },
+  {
+    "id": 62,
+    "slug": "62-ap-gp-series-find-nth-term",
+    "title": "AP/GP Series: Find Nth Term",
+    "filename": "62_AP_GP_Series_Find_Nth_Term.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given first term A, common difference D (for AP) or common ratio R (for GP), and N, compute the Nth term of either an AP or a GP series based on the given type.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string type; long long a,d,n; cin>>type>>a>>d>>n; if(type==\"AP\") cout<<a+(n-1)*d<<\"\\n\"; else {long long ans=a; for(int i=1;i<n;i++) ans*=d; cout<<ans<<\"\\n\";}}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Iterate terms or use closed form."
+  },
+  {
+    "id": 63,
+    "slug": "63-count-sundays-in-a-month",
+    "title": "Count Sundays in a Month",
+    "filename": "63_Count_Sundays_in_a_Month.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Simulation",
+      "Calendar"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Jack loves Sundays. Given the day on which a month starts (e.g., \"mon\", \"tue\") and the total number of days in that month, find how many Sundays occur in that month.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){string start; int days; cin>>start>>days; vector<string>d={\"mon\",\"tue\",\"wed\",\"thu\",\"fri\",\"sat\",\"sun\"}; int idx=find(d.begin(),d.end(),start)-d.begin(),cnt=0; for(int day=1;day<=days;day++) if((idx+day-1)%7==6) cnt++; cout<<cnt<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Linear iteration over input size."
+  },
+  {
+    "id": 64,
+    "slug": "64-toggle-all-bits-of-a-number",
+    "title": "Toggle All Bits of a Number",
+    "filename": "64_Toggle_All_Bits_of_a_Number.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Bit Manipulation"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a positive integer N, convert it to binary, flip every bit from MSB to LSB, and output the corresponding decimal value.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; long long mask=1; while(mask<=n) mask=(mask<<1)|1; cout<<(mask^n)<<\"\\n\";}",
+    "timeComplexity": "O(N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Bit manipulation on integers."
+  },
+  {
+    "id": 65,
+    "slug": "65-number-series-n-2-plus-n-pattern-find-next-term",
+    "title": "Number Series: n^2 + n Pattern — Find Next Term",
+    "filename": "65_Number_Series_n_2_plus_n_Pattern_Find_Next_Term.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math",
+      "Series"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given a sequence following the pattern n^2 + n (e.g., 2, 6, 12, 20,...), find the next term after the last given term.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int m; cin>>m; vector<long long>a(m); for(auto &x:a) cin>>x; long long last=a.back(); long long n=(sqrt(1+4*last)-1)/2+1; cout<<n*n+n<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Iterate terms or use closed form."
+  },
+  {
+    "id": 66,
+    "slug": "66-alice-s-verbal-kho-kho-digit-passing-game",
+    "title": "Alice's Verbal Kho-Kho — Digit Passing Game",
+    "filename": "66_Alice_s_Verbal_Kho_Kho_Digit_Passing_Game.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Math",
+      "Simulation"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Alice gives a digit to the first friend. Each friend passes the digit to the next friend. A confused friend passes digit+1 (with wrap-around 9->0). Given starting digit S, number of friends N, and final digit F, find how many confusions occurred.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int s,n,f; cin>>s>>n>>f; int expected=s%10; int diff=(f-expected+10)%10; cout<<diff<<\"\\n\";}",
+    "timeComplexity": "O(sqrt N) or O(log N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Math checks per number."
+  },
+  {
+    "id": 67,
+    "slug": "67-distinct-elements-in-array",
+    "title": "Distinct Elements in Array",
+    "filename": "67_Distinct_Elements_in_Array.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Find and print all distinct elements from an array of size n (n <= 20), maintaining the order of their first occurrence.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<long long>a(n); unordered_set<long long> seen; vector<long long> ans; for(auto &x:a){cin>>x; if(!seen.count(x)){seen.insert(x); ans.push_back(x);}} for(size_t i=0;i<ans.size();i++) cout<<ans[i]<<(i+1==ans.size()?'\\n':' ');}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(N)",
+    "complexityNote": "Hash map/set for counts or lookup."
+  },
+  {
+    "id": 68,
+    "slug": "68-bfs-breadth-first-search-on-a-graph",
+    "title": "BFS (Breadth First Search) on a Graph",
+    "filename": "68_BFS_Breadth_First_Search_on_a_Graph.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Graph",
+      "BFS"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Given an undirected graph with V vertices and E edges, perform BFS starting from vertex 0 and print the traversal order.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int V,E; cin>>V>>E; vector<vector<int>> g(V); for(int i=0,u,v;i<E;i++){cin>>u>>v; g[u].push_back(v); g[v].push_back(u);} for(auto &v:g) sort(v.begin(),v.end()); vector<int> vis(V); queue<int> q; q.push(0); vis[0]=1; while(!q.empty()){int u=q.front(); q.pop(); cout<<u<<\" \"; for(int v:g[u]) if(!vis[v]) vis[v]=1,q.push(v);} cout<<\"\\n\";}",
+    "timeComplexity": "O(V + E)",
+    "spaceComplexity": "O(V)",
+    "complexityNote": "Visit each vertex and edge once."
+  },
+  {
+    "id": 69,
+    "slug": "69-factory-production-rate-calculation",
+    "title": "Factory Production (Rate Calculation)",
+    "filename": "69_Factory_Production_Rate_Calculation.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "A factory produces X units in 24 days. How many units will it produce in D days?\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){double x,d; cin>>x>>d; cout<<fixed<<setprecision(2)<<(x/24.0)*d<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Default linear scan unless proven otherwise."
+  },
+  {
+    "id": 70,
+    "slug": "70-nth-term-of-mixed-series-a-n-n-and-b-n-n-2",
+    "title": "Nth Term of Mixed Series A(n)=n and B(n)=n^2",
+    "filename": "70_Nth_Term_of_Mixed_Series_A_n_n_and_B_n_n_2.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Math",
+      "Series"
+    ],
+    "source": "Verified PYQ",
+    "exam": "",
+    "problemStatement": "Two series are interleaved: A(n) = n and B(n) = n^2. The combined series is 1,1,2,4,3,9,4,16,5,25,... Given N, find the Nth term.\n\n**Constraints:**\n- Values fit in signed 64-bit integers unless stated otherwise.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: The integer values described in the question.\n- Output: The computed answer.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){long long n; cin>>n; long long k=(n+1)/2; cout<<(n%2?k:k*k)<<\"\\n\";}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Iterate terms or use closed form."
+  },
+  {
+    "id": 71,
+    "slug": "71-sort-0s-1s-and-2s-dutch-national-flag-2026-pattern",
+    "title": "Sort 0s, 1s and 2s — Dutch National Flag (2026 Pattern)",
+    "filename": "71_Sort_0s_1s_and_2s_Dutch_National_Flag_2026_Pattern.cpp",
+    "difficulty": "Medium",
+    "topics": [
+      "Array",
+      "Two Pointers"
+    ],
+    "source": "Verified PYQ",
+    "exam": "2026",
+    "problemStatement": "Given an array of N integers consisting only of 0s, 1s, and 2s, sort it in a single traversal without using any built-in sort. All 0s should come first, followed by 1s, then 2s.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){int n; cin>>n; vector<int>a(n); for(int &x:a) cin>>x; int l=0,m=0,h=n-1; while(m<=h){if(a[m]==0) swap(a[l++],a[m++]); else if(a[m]==1) m++; else swap(a[m],a[h--]);} for(int i=0;i<n;i++) cout<<a[i]<<(i+1==n?'\\n':' ');}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Single pass reordering (two pointers)."
+  },
+  {
+    "id": 72,
+    "slug": "72-move-zeroes-to-end-chocolate-factory-2026",
+    "title": "Move Zeroes to End — Chocolate Factory (2026)",
+    "filename": "72_Move_Zeroes_to_End_Chocolate_Factory_2026.cpp",
+    "difficulty": "Easy",
+    "topics": [
+      "Array"
+    ],
+    "source": "Verified PYQ",
+    "exam": "2026",
+    "problemStatement": "A chocolate factory packs chocolates into packets. An empty packet is represented by 0. Move all empty packets (0s) to the end of the array while maintaining the order of the non-zero packets.\n\n**Constraints:**\n- 1 <= N <= 100000 unless the statement says a smaller limit.\n   - Input is assumed valid unless the problem explicitly asks for validation.\n   - Use O(N) or better whenever a direct traversal solution exists.",
+    "explanation": "Read the statement slowly and identify the core operation:\n   traversal, hashing, two pointers, dynamic programming, math formula, or graph traversal.\n   The implementation below keeps the code short, but the comments above should help you\n   revise the problem as a self-study note before coding it again from memory.\n\n**How to approach:**\n1. Write down what one input item means.\n2. Decide which data structure stores only the information needed for the answer.\n3. Dry-run a small custom test before trusting the code.\n4. Check edge cases: minimum N, duplicates, zero values, and negative values where allowed.\n\n**I/O:**\n- Input: N followed by N array elements. Extra values such as K/S are read after the array when needed.\n- Output: The answer required by the question.",
+    "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n    int n; cin>>n; vector<int>a(n); for(int &x:a) cin>>x;\n    int pos=0; for(int x:a) if(x!=0) a[pos++]=x; while(pos<n) a[pos++]=0;\n    for(int i=0;i<n;i++) cout<<a[i]<<(i+1==n?'\\n':' ');\n}",
+    "timeComplexity": "O(N)",
+    "spaceComplexity": "O(1)",
+    "complexityNote": "Single pass reordering (two pointers)."
+  }
+]
