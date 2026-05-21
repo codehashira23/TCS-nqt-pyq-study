@@ -107,17 +107,24 @@ function getNavIndex(id) {
 }
 
 function updateNav() {
-  const prevBtn = $("#prevBtn");
-  const nextBtn = $("#nextBtn");
-  const posEl = $("#navPosition");
-  const fill = $("#navProgressFill");
-  if (!prevBtn || !nextBtn || !posEl) return;
+  const prevBtns = $$(".js-nav-prev");
+  const nextBtns = $$(".js-nav-next");
+  const posEls = $$(".js-nav-position");
+  const fills = $$(".js-nav-progress-fill");
+  if (!prevBtns.length || !posEls.length) return;
+
+  const setDisabled = (disabled) => {
+    prevBtns.forEach((b) => (b.disabled = disabled));
+    nextBtns.forEach((b) => (b.disabled = disabled));
+  };
+
+  const setPosition = (html) => posEls.forEach((el) => (el.innerHTML = html));
+  const setProgress = (pct) => fills.forEach((el) => (el.style.width = `${pct}%`));
 
   if (state.activeId == null) {
-    prevBtn.disabled = true;
-    nextBtn.disabled = true;
-    posEl.textContent = "—";
-    if (fill) fill.style.width = "0%";
+    setDisabled(true);
+    setPosition("—");
+    setProgress(0);
     return;
   }
 
@@ -127,24 +134,25 @@ function updateNav() {
   const totalAll = editionQuestions().length;
 
   if (idx < 0) {
-    prevBtn.disabled = true;
-    nextBtn.disabled = true;
-    posEl.textContent = "Not in current filter";
-    if (fill) fill.style.width = "0%";
+    setDisabled(true);
+    setPosition("Not in current filter");
+    setProgress(0);
     return;
   }
 
-  prevBtn.disabled = idx <= 0;
-  nextBtn.disabled = idx >= total - 1;
+  prevBtns.forEach((b) => (b.disabled = idx <= 0));
+  nextBtns.forEach((b) => (b.disabled = idx >= total - 1));
 
   const pct = total > 1 ? ((idx + 1) / total) * 100 : 100;
-  if (fill) fill.style.width = `${pct}%`;
+  setProgress(pct);
 
   const filteredNote =
     total < totalAll ? ` <span class="nav-filtered">(${total} shown)</span>` : "";
   const pad = state.edition === "striver" ? 3 : 2;
   const prefix = state.edition === "striver" ? "S" : "";
-  posEl.innerHTML = `<strong>${prefix}${String(state.activeId).padStart(pad, "0")}</strong> · ${idx + 1} / ${total}${filteredNote}`;
+  setPosition(
+    `<strong>${prefix}${String(state.activeId).padStart(pad, "0")}</strong> · ${idx + 1} / ${total}${filteredNote}`
+  );
 }
 
 function goToAdjacent(direction) {
@@ -424,8 +432,16 @@ async function init() {
     goHome();
   });
   $("#copyCodeBtn")?.addEventListener("click", copyCode);
-  $("#prevBtn")?.addEventListener("click", () => goToAdjacent(-1));
-  $("#nextBtn")?.addEventListener("click", () => goToAdjacent(1));
+
+  $("#questionDetail")?.addEventListener("click", (e) => {
+    if (e.target.closest(".js-nav-prev")) {
+      e.preventDefault();
+      goToAdjacent(-1);
+    } else if (e.target.closest(".js-nav-next")) {
+      e.preventDefault();
+      goToAdjacent(1);
+    }
+  });
   $("#menuToggle")?.addEventListener("click", () => {
     const open = !$("#sidebar")?.classList.contains("open");
     openSidebar(open);
