@@ -154,7 +154,8 @@ function goToAdjacent(direction) {
   if (idx < 0) return;
   const nextIdx = idx + direction;
   if (nextIdx < 0 || nextIdx >= list.length) return;
-  showQuestion(list[nextIdx].id);
+  const next = list[nextIdx];
+  showQuestion(next.edition, next.id);
   $("#mainContent")?.scrollTo({ top: 0, behavior: "smooth" });
 }
 
