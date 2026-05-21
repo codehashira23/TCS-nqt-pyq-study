@@ -2,7 +2,7 @@ const state = {
   questions: [],
   filtered: [],
   activeId: null,
-  activeSection: "problem",
+  copyRaw: "",
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -111,18 +111,40 @@ function goToAdjacent(direction) {
   $("#mainContent")?.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function setActiveSection(section) {
-  state.activeSection = section;
-  $$(".section-tab").forEach((tab) => {
-    const on = tab.dataset.section === section;
-    tab.classList.toggle("active", on);
-    tab.setAttribute("aria-selected", on ? "true" : "false");
-  });
-  $$("[data-panel]").forEach((panel) => {
-    const on = panel.dataset.panel === section;
-    panel.classList.toggle("hidden-panel", !on);
-    panel.hidden = !on;
-  });
+function renderExplainedCode(item) {
+  const container = $("#codeExplained");
+  if (!container) return;
+
+  const lines = item.codeLines?.length
+    ? item.codeLines
+    : (item.code || "").split("\n").map((text, i) => ({
+        num: i + 1,
+        text,
+        note: "",
+        important: false,
+      }));
+
+  const hl = typeof window.highlightCpp === "function" ? window.highlightCpp : (s) => escapeHtml(s);
+
+  container.innerHTML = lines
+    .map((row) => {
+      const empty = !row.text.trim();
+      const key = row.important && row.note;
+      const codeHtml = row.text ? hl(row.text) : "&nbsp;";
+      const noteHtml = row.note
+        ? `<aside class="line-note">${escapeHtml(row.note)}</aside>`
+        : `<aside class="line-note line-note--empty" aria-hidden="true"></aside>`;
+      return `
+        <div class="code-row ${key ? "code-row--key" : ""} ${empty ? "code-row--blank" : ""}">
+          <span class="code-ln">${row.num}</span>
+          <pre class="code-line"><code>${codeHtml}</code></pre>
+          ${noteHtml}
+        </div>`;
+    })
+    .join("");
+
+  const tab = $("#codeTabName");
+  if (tab) tab.textContent = item.filename || "solution.cpp";
 }
 
 function openSidebar(open) {
@@ -237,15 +259,8 @@ function showQuestion(id) {
   $("#detailSpace").textContent = item.spaceComplexity;
   $("#detailCxNote").textContent = item.complexityNote;
 
-  const codeEl = $("#detailCode");
-  codeEl.textContent = item.code;
-  codeEl.dataset.raw = item.code;
-
-  if (typeof highlightCppCode === "function") {
-    highlightCppCode(codeEl, $("#codeGutter"), item.filename || "solution.cpp");
-  }
-
-  setActiveSection(state.activeSection);
+  state.copyRaw = item.code || "";
+  renderExplainedCode(item);
   renderList();
   updateNav();
 
@@ -261,13 +276,12 @@ function pickRandom() {
 }
 
 async function copyCode() {
-  const codeEl = $("#detailCode");
-  const raw = codeEl.dataset.raw || codeEl.textContent;
+  const raw = state.copyRaw;
   const btn = $("#copyCodeBtn");
   const orig = btn.innerHTML;
   try {
     await navigator.clipboard.writeText(raw);
-    btn.innerHTML = orig.replace("Copy", "Copied!");
+    btn.innerHTML = orig.replace("Copy code", "Copied!");
     btn.classList.add("copied");
     setTimeout(() => {
       btn.innerHTML = orig;
@@ -320,10 +334,6 @@ async function init() {
     });
   });
 
-  $$(".section-tab").forEach((tab) => {
-    tab.addEventListener("click", () => setActiveSection(tab.dataset.section));
-  });
-
   $("#startBtn")?.addEventListener("click", () => {
     const first = getNavList()[0];
     if (first) showQuestion(first.id);
@@ -365,11 +375,7 @@ async function init() {
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
       goToAdjacent(1);
-    } else if (e.key === "1") setActiveSection("problem");
-    else if (e.key === "2") setActiveSection("complexity");
-    else if (e.key === "3") setActiveSection("explanation");
-    else if (e.key === "4") setActiveSection("code");
-    else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "c") {
+    } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "c") {
       e.preventDefault();
       copyCode();
     }

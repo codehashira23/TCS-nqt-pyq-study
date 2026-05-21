@@ -100,7 +100,7 @@
           </article>
         </div>
         <p class="welcome-hint">
-          <kbd>←</kbd> <kbd>→</kbd> navigate questions · <kbd>/</kbd> focus search
+          <kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>/</kbd> search · scroll one page for problem, complexity, explanation & code
         </p>
       </div>
 
@@ -129,19 +129,14 @@
           </nav>
         </header>
 
-        <div class="section-tabs" role="tablist" aria-label="Question sections">
-          <button type="button" role="tab" class="section-tab active" data-section="problem" aria-selected="true" id="tabProblem">Problem</button>
-          <button type="button" role="tab" class="section-tab" data-section="complexity" aria-selected="false" id="tabComplexity">Complexity</button>
-          <button type="button" role="tab" class="section-tab" data-section="explanation" aria-selected="false" id="tabExplanation">Explanation</button>
-          <button type="button" role="tab" class="section-tab" data-section="code" aria-selected="false" id="tabCode">Solution</button>
-        </div>
-
-        <div class="sections">
-          <section class="panel panel-active" id="panelProblem" data-panel="problem" role="tabpanel">
+        <div class="sections flow-sections">
+          <section class="panel" id="sectionProblem">
+            <h3 class="section-heading"><span class="section-icon">◇</span> Problem Statement</h3>
             <div class="prose" id="detailProblem"></div>
           </section>
 
-          <section class="panel hidden-panel" id="panelComplexity" data-panel="complexity" role="tabpanel" hidden>
+          <section class="panel panel-complexity" id="sectionComplexity">
+            <h3 class="section-heading"><span class="section-icon section-icon--green">◇</span> Complexity</h3>
             <div class="complexity-grid">
               <div class="cx-item cx-item--time">
                 <span class="cx-label">Time</span>
@@ -155,11 +150,16 @@
             <p class="cx-note" id="detailCxNote"></p>
           </section>
 
-          <section class="panel hidden-panel" id="panelExplanation" data-panel="explanation" role="tabpanel" hidden>
+          <section class="panel" id="sectionExplanation">
+            <h3 class="section-heading"><span class="section-icon section-icon--orange">◇</span> Explanation</h3>
             <div class="prose" id="detailExplanation"></div>
           </section>
 
-          <section class="panel panel-code hidden-panel" id="panelCode" data-panel="code" role="tabpanel" hidden>
+          <section class="panel panel-code" id="sectionCode">
+            <div class="code-section-head">
+              <h3 class="section-heading"><span class="section-icon section-icon--pink">◇</span> C++ Solution</h3>
+              <p class="code-section-sub">Formatted code with line-by-line notes on the right</p>
+            </div>
             <div class="vscode-editor">
               <div class="vscode-titlebar">
                 <div class="vscode-traffic">
@@ -168,15 +168,12 @@
                   <span class="dot dot-max"></span>
                 </div>
                 <span class="vscode-tab active" id="codeTabName">solution.cpp</span>
-                <button type="button" class="btn-copy" id="copyCodeBtn" title="Copy code (Ctrl+Shift+C)">
+                <button type="button" class="btn-copy" id="copyCodeBtn" title="Copy clean code">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  Copy
+                  Copy code
                 </button>
               </div>
-              <div class="vscode-gutter-wrap">
-                <div class="vscode-gutter" id="codeGutter" aria-hidden="true"></div>
-                <pre class="vscode-pre"><code class="language-cpp dracula" id="detailCode"></code></pre>
-              </div>
+              <div class="code-explained" id="codeExplained"></div>
             </div>
           </section>
         </div>

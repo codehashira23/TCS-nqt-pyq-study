@@ -1,7 +1,11 @@
 """Parse TCS NQT C++ PYQ files and generate website/data/questions.json."""
 import json
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from code_format import annotate_cpp, build_code_lines, format_cpp
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "website" / "data" / "questions.json"
@@ -131,6 +135,10 @@ def parse_cpp(path: Path) -> dict:
         problem_statement += "\n\n**Constraints:**\n" + constraints
 
     slug = re.sub(r"[^a-z0-9]+", "-", path.stem.lower()).strip("-")
+    topics_str = ", ".join(t.strip() for t in topics.split(",") if t.strip())
+    formatted = format_cpp(code)
+    code_lines, _ = build_code_lines(code, title, topics_str)
+    annotated = annotate_cpp(code, title, topics_str)
 
     return {
         "id": num,
@@ -143,7 +151,9 @@ def parse_cpp(path: Path) -> dict:
         "exam": exam,
         "problemStatement": problem_statement.strip(),
         "explanation": full_explanation.strip(),
-        "code": code,
+        "code": formatted,
+        "codeAnnotated": annotated,
+        "codeLines": code_lines,
         "timeComplexity": cx["time"],
         "spaceComplexity": cx["space"],
         "complexityNote": cx["note"],

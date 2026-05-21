@@ -141,6 +141,8 @@ function buildLineNumbers(code) {
   return lines.map((_, idx) => `<span>${idx + 1}</span>`).join("");
 }
 
+window.highlightCpp = highlightCpp;
+
 window.highlightCppCode = function (codeEl, gutterEl, filename) {
   const raw = codeEl.textContent || "";
   codeEl.innerHTML = highlightCpp(raw);
