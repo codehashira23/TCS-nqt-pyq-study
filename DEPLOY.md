@@ -57,6 +57,49 @@ Run `python scripts/build_questions.py` before dragging if you changed any `.cpp
 
 ---
 
+## Custom domain (`tcsnqt.io`)
+
+GitHub repo: **codehashira23/TCS-nqt-pyq-study**
+
+### A) Get the default site working first
+
+1. **Settings → Pages → Build and deployment → Source** → choose **GitHub Actions** (not Jekyll, not “Static HTML” buttons on that screen).
+2. **Actions** tab → run **Deploy to GitHub Pages** (or push any commit).
+3. When green, open: **https://codehashira23.github.io/TCS-nqt-pyq-study/**
+
+Only after that works, configure the custom domain below.
+
+### B) DNS at your domain registrar (where you bought tcsnqt.io)
+
+Log in to GoDaddy / Namecheap / Cloudflare / etc. and add:
+
+**For root domain `tcsnqt.io` (recommended):**
+
+| Type | Host / Name | Value |
+|------|-------------|--------|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+
+**Optional — also support `www.tcsnqt.io`:**
+
+| Type | Host / Name | Value |
+|------|-------------|--------|
+| CNAME | `www` | `codehashira23.github.io` |
+
+Remove any old A/CNAME records that conflict. Save and wait **15 minutes – 48 hours** for DNS to propagate.
+
+### C) GitHub Pages custom domain field
+
+1. **Settings → Pages → Custom domain** → enter `tcsnqt.io` → **Save**
+2. Wait until **DNS check** turns green.
+3. Then enable **Enforce HTTPS** (only available after DNS is valid).
+
+The file `website/CNAME` in this repo tells GitHub to use `tcsnqt.io` on each deploy.
+
+---
+
 ## Troubleshooting
 
 | Issue | Fix |
