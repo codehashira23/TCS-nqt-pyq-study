@@ -3,141 +3,163 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="72 TCS NQT previous-year coding questions with solutions, explanations, and complexity analysis." />
   <title>TCS NQT PYQ — Self Study</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="ambient" aria-hidden="true"></div>
+  <div class="ambient" aria-hidden="true">
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="progress-track" id="readProgress" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="header-inner">
-      <div class="brand">
-        <div class="brand-icon" aria-hidden="true">
-          <span></span><span></span><span></span>
+      <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open question list" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="#" class="brand" id="brandHome">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="24" height="24" rx="6" stroke="currentColor" stroke-width="1.5"/><path d="M10 16h12M16 10v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div>
-          <p class="brand-eyebrow">TCS NQT · Previous Year Questions</p>
-          <h1>Self Study Lab</h1>
+          <p class="brand-eyebrow">TCS NQT · PYQ Bank</p>
+          <h1>Study Lab</h1>
         </div>
-      </div>
+      </a>
       <div class="header-stats" id="headerStats"></div>
     </div>
   </header>
 
   <div class="layout">
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-head">
-        <h2>Question Bank</h2>
-        <span class="count-pill" id="listCount">72</span>
+        <div>
+          <h2>Questions</h2>
+          <p class="sidebar-sub" id="listCountLabel"><span id="listCount">72</span> available</p>
+        </div>
+        <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Close list">×</button>
       </div>
       <div class="sidebar-controls">
         <label class="search-wrap">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="search" id="searchInput" placeholder="Search by title, topic, #..." autocomplete="off" />
+          <input type="search" id="searchInput" placeholder="Search title, topic, #..." autocomplete="off" />
+          <kbd class="search-kbd" aria-hidden="true">/</kbd>
         </label>
-        <div class="filter-row">
-          <select id="difficultyFilter" aria-label="Filter by difficulty">
-            <option value="">All levels</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-          <select id="topicFilter" aria-label="Filter by topic">
-            <option value="">All topics</option>
-          </select>
+        <div class="filter-chips" role="group" aria-label="Difficulty filter">
+          <button type="button" class="chip active" data-diff="">All</button>
+          <button type="button" class="chip" data-diff="Easy">Easy</button>
+          <button type="button" class="chip" data-diff="Medium">Med</button>
+          <button type="button" class="chip" data-diff="Hard">Hard</button>
         </div>
+        <select id="topicFilter" class="topic-select" aria-label="Filter by topic">
+          <option value="">All topics</option>
+        </select>
+        <select id="difficultyFilter" class="visually-hidden" aria-hidden="true" tabindex="-1">
+          <option value="">All levels</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
       </div>
       <nav class="question-list" id="questionList" aria-label="Question list"></nav>
     </aside>
 
     <main class="content" id="mainContent">
       <div class="welcome" id="welcomePanel">
-        <div class="welcome-glow" aria-hidden="true"></div>
-        <p class="welcome-kicker">Dracula-themed study workspace</p>
-        <h2>Master every PYQ<br/><span class="accent-line">one problem at a time</span></h2>
-        <p class="welcome-lead">Browse 72 verified TCS NQT questions. Each entry ships with the full statement, VS Code–styled C++ solution, revision notes, and complexity analysis.</p>
-        <div class="welcome-grid">
-          <div class="welcome-card">
-            <span class="wc-icon">01</span>
-            <h3>Problem</h3>
-            <p>Statement, constraints & I/O format</p>
-          </div>
-          <div class="welcome-card">
-            <span class="wc-icon">02</span>
-            <h3>Solution</h3>
-            <p>Syntax-highlighted C++ in Dracula theme</p>
-          </div>
-          <div class="welcome-card">
-            <span class="wc-icon">03</span>
-            <h3>Revision</h3>
-            <p>Explanation + time & space complexity</p>
+        <div class="welcome-hero">
+          <p class="welcome-kicker"><span class="pulse-dot"></span> 72 verified coding PYQs</p>
+          <h2>Your private<br/><em>exam rehearsal</em> room</h2>
+          <p class="welcome-lead">Statement, Dracula-themed C++ solutions, revision notes, and Big-O — structured for focused self-study before TCS NQT.</p>
+          <div class="welcome-actions">
+            <button type="button" class="btn-primary" id="startBtn">Start with Question 01</button>
+            <button type="button" class="btn-ghost" id="randomBtn">Random question</button>
           </div>
         </div>
-        <p class="welcome-hint">← Pick any question from the sidebar to begin</p>
+        <div class="welcome-grid">
+          <article class="welcome-card" style="--delay: 0.1s">
+            <div class="wc-num">01</div>
+            <h3>Read</h3>
+            <p>Full problem statement with constraints and I/O format.</p>
+          </article>
+          <article class="welcome-card" style="--delay: 0.2s">
+            <div class="wc-num">02</div>
+            <h3>Understand</h3>
+            <p>Approach notes and time / space complexity breakdown.</p>
+          </article>
+          <article class="welcome-card" style="--delay: 0.3s">
+            <div class="wc-num">03</div>
+            <h3>Code</h3>
+            <p>VS Code editor with Dracula syntax highlighting.</p>
+          </article>
+        </div>
+        <p class="welcome-hint">
+          <kbd>←</kbd> <kbd>→</kbd> navigate questions · <kbd>/</kbd> focus search
+        </p>
       </div>
 
       <article class="question-detail hidden" id="questionDetail">
-        <header class="detail-header">
-          <div class="detail-id-wrap">
-            <span class="q-number" id="detailNumber"></span>
+        <header class="detail-top">
+          <div class="detail-header">
+            <span class="q-number" id="detailNumber" aria-hidden="true"></span>
+            <div class="detail-meta">
+              <p class="detail-eyebrow" id="detailEyebrow">Question</p>
+              <h2 id="detailTitle"></h2>
+              <div class="badges" id="detailBadges"></div>
+            </div>
           </div>
-          <div class="detail-meta">
-            <h2 id="detailTitle"></h2>
-            <div class="badges" id="detailBadges"></div>
-          </div>
+
+          <nav class="question-nav" id="questionNav" aria-label="Question navigation">
+            <button type="button" class="nav-btn nav-btn--prev" id="prevBtn" disabled aria-label="Previous question">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="nav-center">
+              <div class="nav-progress" aria-hidden="true"><div class="nav-progress-fill" id="navProgressFill"></div></div>
+              <span class="nav-position" id="navPosition">—</span>
+            </div>
+            <button type="button" class="nav-btn nav-btn--next" id="nextBtn" disabled aria-label="Next question">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </nav>
         </header>
 
-        <nav class="question-nav" id="questionNav" aria-label="Question navigation">
-          <button type="button" class="nav-btn nav-btn--prev" id="prevBtn" disabled>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-            <span>Previous</span>
-          </button>
-          <span class="nav-position" id="navPosition">—</span>
-          <button type="button" class="nav-btn nav-btn--next" id="nextBtn" disabled>
-            <span>Next</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </nav>
+        <div class="section-tabs" role="tablist" aria-label="Question sections">
+          <button type="button" role="tab" class="section-tab active" data-section="problem" aria-selected="true" id="tabProblem">Problem</button>
+          <button type="button" role="tab" class="section-tab" data-section="complexity" aria-selected="false" id="tabComplexity">Complexity</button>
+          <button type="button" role="tab" class="section-tab" data-section="explanation" aria-selected="false" id="tabExplanation">Explanation</button>
+          <button type="button" role="tab" class="section-tab" data-section="code" aria-selected="false" id="tabCode">Solution</button>
+        </div>
 
         <div class="sections">
-          <section class="panel panel-problem">
-            <div class="panel-label">
-              <span class="panel-dot"></span>
-              Problem Statement
-            </div>
+          <section class="panel panel-active" id="panelProblem" data-panel="problem" role="tabpanel">
             <div class="prose" id="detailProblem"></div>
           </section>
 
-          <section class="panel panel-complexity">
-            <div class="panel-label">
-              <span class="panel-dot panel-dot--green"></span>
-              Complexity
-            </div>
+          <section class="panel hidden-panel" id="panelComplexity" data-panel="complexity" role="tabpanel" hidden>
             <div class="complexity-grid">
-              <div class="cx-item">
+              <div class="cx-item cx-item--time">
                 <span class="cx-label">Time</span>
                 <code class="cx-value" id="detailTime"></code>
               </div>
-              <div class="cx-item">
+              <div class="cx-item cx-item--space">
                 <span class="cx-label">Space</span>
-                <code class="cx-value cx-value--cyan" id="detailSpace"></code>
+                <code class="cx-value" id="detailSpace"></code>
               </div>
             </div>
             <p class="cx-note" id="detailCxNote"></p>
           </section>
 
-          <section class="panel">
-            <div class="panel-label">
-              <span class="panel-dot panel-dot--orange"></span>
-              Explanation
-            </div>
+          <section class="panel hidden-panel" id="panelExplanation" data-panel="explanation" role="tabpanel" hidden>
             <div class="prose" id="detailExplanation"></div>
           </section>
 
-          <section class="panel panel-code">
+          <section class="panel panel-code hidden-panel" id="panelCode" data-panel="code" role="tabpanel" hidden>
             <div class="vscode-editor">
               <div class="vscode-titlebar">
                 <div class="vscode-traffic">
@@ -146,8 +168,8 @@
                   <span class="dot dot-max"></span>
                 </div>
                 <span class="vscode-tab active" id="codeTabName">solution.cpp</span>
-                <button type="button" class="btn-copy" id="copyCodeBtn" title="Copy to clipboard">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <button type="button" class="btn-copy" id="copyCodeBtn" title="Copy code (Ctrl+Shift+C)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                   Copy
                 </button>
               </div>
