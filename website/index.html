@@ -209,7 +209,19 @@
     </main>
   </div>
 
+  <aside class="visit-counter" id="visitCounter" aria-label="Site visit count">
+    <svg class="visit-counter__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <span class="visit-counter__text">
+      <span class="visit-counter__label">Visits</span>
+      <span class="visit-counter__count" id="visitCount" data-loading="true">—</span>
+    </span>
+  </aside>
+
   <script src="js/cpp-highlight.js"></script>
+  <script src="js/visit-counter.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
