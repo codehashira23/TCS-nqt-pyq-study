@@ -27,11 +27,29 @@ def _split_outside_strings(code: str) -> list[str]:
                     break
                 i += 1
             continue
-        if c in "{};":
+        if c in "{}":
             if buf.strip():
                 tokens.append(buf.strip())
                 buf = ""
             tokens.append(c)
+            i += 1
+            continue
+        if c == ";":
+            # Don't split for(;;) headers — only statement-ending semicolons
+            depth = 0
+            for ch in buf:
+                if ch == "(":
+                    depth += 1
+                elif ch == ")":
+                    depth = max(0, depth - 1)
+            if depth == 0:
+                if buf.strip():
+                    tokens.append(buf.strip())
+                    buf = ""
+                tokens.append(";")
+                i += 1
+                continue
+            buf += c
             i += 1
             continue
         buf += c
@@ -189,12 +207,28 @@ NOTE_RULES = [
 ]
 
 
+def _split_inline_comment(line: str) -> tuple[str, str]:
+    """Return (code_part, note) from a line that may end with // comment."""
+    stripped = line.strip()
+    if not stripped:
+        return line, ""
+    if stripped.startswith("//"):
+        return "", stripped[2:].strip()
+    idx = line.find("//")
+    if idx > 0:
+        before = line[:idx].rstrip()
+        after = line[idx + 2 :].strip()
+        if before and after:
+            return before, after
+    return line, ""
+
+
 def _line_note(line: str, title: str, topics: str) -> str:
     stripped = line.strip()
     if not stripped or stripped in ("{", "}"):
         return ""
     if stripped.startswith("//"):
-        return ""
+        return stripped[2:].strip()
 
     blob = f"{title} {topics}"
     for pat, note in NOTE_RULES:
@@ -218,13 +252,16 @@ def _line_note(line: str, title: str, topics: str) -> str:
     return ""
 
 
-def build_code_lines(code: str, title: str, topics: str) -> list[dict]:
+def build_code_lines(code: str, title: str, topics: str) -> tuple[list[dict], str]:
     formatted = format_cpp(code)
     lines = []
     for i, raw in enumerate(formatted.split("\n"), start=1):
-        text = raw.rstrip()
-        note = _line_note(text, title, topics)
-        important = bool(note) and text.strip() not in ("{", "}")
+        code_part, inline_note = _split_inline_comment(raw.rstrip())
+        text = code_part if code_part else raw.rstrip()
+        note = inline_note or _line_note(text, title, topics)
+        if not code_part and inline_note:
+            text = ""
+        important = bool(note) and bool(text.strip() or inline_note)
         lines.append(
             {
                 "num": i,

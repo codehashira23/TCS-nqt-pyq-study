@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="72 TCS NQT previous-year coding questions with solutions, explanations, and complexity analysis." />
-  <title>TCS NQT PYQ — Self Study</title>
+  <meta name="description" content="TCS NQT PYQ bank plus Striver's 100 Questions — solutions, explanations, and complexity for self-study." />
+  <title>TCS NQT Study Lab — PYQ + Striver 100</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
@@ -27,7 +27,7 @@
           <svg viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="24" height="24" rx="6" stroke="currentColor" stroke-width="1.5"/><path d="M10 16h12M16 10v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div>
-          <p class="brand-eyebrow">TCS NQT · PYQ Bank</p>
+          <p class="brand-eyebrow">TCS NQT · Self Study</p>
           <h1>Study Lab</h1>
         </div>
       </a>
@@ -42,11 +42,21 @@
       <div class="sidebar-head">
         <div>
           <h2>Questions</h2>
-          <p class="sidebar-sub" id="listCountLabel"><span id="listCount">72</span> available</p>
+          <p class="sidebar-sub" id="listCountLabel"><span id="listCount">0</span> in this edition</p>
         </div>
         <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Close list">×</button>
       </div>
       <div class="sidebar-controls">
+        <div class="edition-switch" role="group" aria-label="Question edition">
+          <button type="button" class="edition-btn active" data-edition="pyq" id="editionPyq">
+            <span class="edition-name">TCS NQT PYQ</span>
+            <span class="edition-count" id="countPyq">72</span>
+          </button>
+          <button type="button" class="edition-btn" data-edition="striver" id="editionStriver">
+            <span class="edition-name">Striver 100 Q</span>
+            <span class="edition-count" id="countStriver">100</span>
+          </button>
+        </div>
         <label class="search-wrap">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <input type="search" id="searchInput" placeholder="Search title, topic, #..." autocomplete="off" />
@@ -74,9 +84,9 @@
     <main class="content" id="mainContent">
       <div class="welcome" id="welcomePanel">
         <div class="welcome-hero">
-          <p class="welcome-kicker"><span class="pulse-dot"></span> 72 verified coding PYQs</p>
+          <p class="welcome-kicker"><span class="pulse-dot"></span> <span id="welcomeCount">172</span> coding questions</p>
           <h2>Your private<br/><em>exam rehearsal</em> room</h2>
-          <p class="welcome-lead">Statement, Dracula-themed C++ solutions, revision notes, and Big-O — structured for focused self-study before TCS NQT.</p>
+          <p class="welcome-lead"><strong>72 TCS NQT PYQs</strong> from previous exams, plus <strong>Striver's 100 Q for TCS NQT</strong> for fundamentals — all with formatted C++, line notes, and complexity.</p>
           <div class="welcome-actions">
             <button type="button" class="btn-primary" id="startBtn">Start with Question 01</button>
             <button type="button" class="btn-ghost" id="randomBtn">Random question</button>

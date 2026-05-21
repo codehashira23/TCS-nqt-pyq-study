@@ -302,6 +302,95 @@ body {
   gap: 0.65rem;
 }
 
+.edition-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  padding: 0.35rem;
+  background: var(--ink);
+  border: 1px solid var(--ink-border);
+  border-radius: var(--radius-sm);
+}
+
+.edition-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: all 0.2s var(--ease);
+}
+
+.edition-btn:hover {
+  color: var(--text);
+  background: var(--ink-card);
+}
+
+.edition-btn.active {
+  background: linear-gradient(135deg, rgba(189, 147, 249, 0.25), rgba(255, 121, 198, 0.12));
+  border-color: var(--ink-border-strong);
+  color: var(--text);
+}
+
+.edition-btn[data-edition="striver"].active {
+  background: linear-gradient(135deg, rgba(80, 250, 123, 0.15), rgba(139, 233, 253, 0.1));
+  border-color: rgba(80, 250, 123, 0.35);
+}
+
+.edition-name {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.edition-count {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--dracula-comment);
+}
+
+.edition-btn.active .edition-count {
+  color: var(--dracula-cyan);
+}
+
+.badge.edition-pyq {
+  color: var(--dracula-purple);
+  border-color: rgba(189, 147, 249, 0.35);
+  background: rgba(189, 147, 249, 0.1);
+}
+
+.badge.edition-striver {
+  color: var(--dracula-green);
+  border-color: rgba(80, 250, 123, 0.35);
+  background: rgba(80, 250, 123, 0.08);
+}
+
+.q-item-edition {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dracula-comment);
+}
+
+.q-item.active .q-item-edition--striver {
+  color: var(--dracula-green);
+}
+
+.q-item.active .q-item-edition--pyq {
+  color: var(--dracula-pink);
+}
+
 .search-wrap {
   display: flex;
   align-items: center;
@@ -420,11 +509,14 @@ body {
 .q-item-num {
   grid-row: 1 / 3;
   align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--dracula-purple);
-  min-width: 2rem;
+  min-width: 2.4rem;
 }
 
 .q-item.active .q-item-num { color: var(--dracula-pink); }

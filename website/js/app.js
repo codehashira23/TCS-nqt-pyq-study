@@ -1,9 +1,23 @@
 const state = {
   questions: [],
   filtered: [],
+  edition: "pyq",
   activeId: null,
   copyRaw: "",
 };
+
+function editionQuestions(edition = state.edition) {
+  return state.questions.filter((q) => q.edition === edition);
+}
+
+function findQuestion(edition, id) {
+  return state.questions.find((q) => q.edition === edition && q.id === id);
+}
+
+function formatQNum(item) {
+  const n = String(item.id).padStart(item.edition === "striver" ? 3 : 2, "0");
+  return item.edition === "striver" ? n : n;
+}
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
@@ -24,28 +38,59 @@ function difficultyClass(d) {
   return `pill pill-${(d || "medium").toLowerCase()}`;
 }
 
-function buildTopicFilter(questions) {
-  const topics = new Set();
-  questions.forEach((q) => q.topics.forEach((t) => topics.add(t)));
+function buildTopicFilter() {
   const select = $("#topicFilter");
+  const current = select.value;
+  select.innerHTML = '<option value="">All topics</option>';
+  const topics = new Set();
+  editionQuestions().forEach((q) => q.topics.forEach((t) => topics.add(t)));
   [...topics].sort().forEach((t) => {
     const opt = document.createElement("option");
     opt.value = t;
     opt.textContent = t;
     select.appendChild(opt);
   });
+  if ([...select.options].some((o) => o.value === current)) select.value = current;
 }
 
-function renderStats(questions) {
-  const easy = questions.filter((q) => q.difficulty === "Easy").length;
-  const medium = questions.filter((q) => q.difficulty === "Medium").length;
-  const hard = questions.filter((q) => q.difficulty === "Hard").length;
+function updateEditionCounts() {
+  const pyq = editionQuestions("pyq").length;
+  const striver = editionQuestions("striver").length;
+  const elPyq = $("#countPyq");
+  const elStriver = $("#countStriver");
+  const welcome = $("#welcomeCount");
+  if (elPyq) elPyq.textContent = pyq;
+  if (elStriver) elStriver.textContent = striver;
+  if (welcome) welcome.textContent = pyq + striver;
+}
+
+function renderStats() {
+  const pool = editionQuestions();
+  const easy = pool.filter((q) => q.difficulty === "Easy").length;
+  const medium = pool.filter((q) => q.difficulty === "Medium").length;
+  const hard = pool.filter((q) => q.difficulty === "Hard").length;
+  const label = state.edition === "striver" ? "Striver" : "PYQ";
   $("#headerStats").innerHTML = `
-    <div><strong>${questions.length}</strong><span>Total</span></div>
+    <div><strong>${pool.length}</strong><span>${label}</span></div>
     <div><strong>${easy}</strong><span>Easy</span></div>
     <div><strong>${medium}</strong><span>Med</span></div>
     <div><strong>${hard}</strong><span>Hard</span></div>
   `;
+}
+
+function setEdition(edition) {
+  state.edition = edition;
+  $$(".edition-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.edition === edition);
+  });
+  const active = findQuestion(state.edition, state.activeId);
+  if (!active) {
+    state.activeId = null;
+    goHome();
+  }
+  buildTopicFilter();
+  applyFilters();
+  renderStats();
 }
 
 function updateListCount() {
@@ -58,7 +103,7 @@ function getNavList() {
 }
 
 function getNavIndex(id) {
-  return getNavList().findIndex((q) => q.id === id);
+  return getNavList().findIndex((q) => q.id === id && q.edition === state.edition);
 }
 
 function updateNav() {
@@ -79,7 +124,7 @@ function updateNav() {
   const list = getNavList();
   const idx = getNavIndex(state.activeId);
   const total = list.length;
-  const totalAll = state.questions.length;
+  const totalAll = editionQuestions().length;
 
   if (idx < 0) {
     prevBtn.disabled = true;
@@ -97,7 +142,9 @@ function updateNav() {
 
   const filteredNote =
     total < totalAll ? ` <span class="nav-filtered">(${total} shown)</span>` : "";
-  posEl.innerHTML = `<strong>#${String(state.activeId).padStart(2, "0")}</strong> · ${idx + 1} / ${total}${filteredNote}`;
+  const pad = state.edition === "striver" ? 3 : 2;
+  const prefix = state.edition === "striver" ? "S" : "";
+  posEl.innerHTML = `<strong>${prefix}${String(state.activeId).padStart(pad, "0")}</strong> · ${idx + 1} / ${total}${filteredNote}`;
 }
 
 function goToAdjacent(direction) {
@@ -185,13 +232,22 @@ function applyFilters() {
   const topic = $("#topicFilter").value;
 
   state.filtered = state.questions.filter((item) => {
+    if (item.edition !== state.edition) return false;
     if (diff && item.difficulty !== diff) return false;
     if (topic && !item.topics.includes(topic)) return false;
     if (!q) return true;
-    const hay = [item.id, item.title, item.topics.join(" "), item.problemStatement, item.timeComplexity]
+    const hay = [
+      item.edition,
+      item.id,
+      item.title,
+      item.topics.join(" "),
+      item.problemStatement,
+      item.timeComplexity,
+    ]
       .join(" ")
       .toLowerCase();
-    return hay.includes(q) || String(item.id).padStart(2, "0").includes(q);
+    const pad = item.edition === "striver" ? 3 : 2;
+    return hay.includes(q) || String(item.id).padStart(pad, "0").includes(q);
   });
 
   renderList();
@@ -207,44 +263,59 @@ function renderList() {
   }
 
   list.innerHTML = state.filtered
-    .map(
-      (item) => `
-    <button type="button" class="q-item ${item.id === state.activeId ? "active" : ""}"
-      data-id="${item.id}" aria-current="${item.id === state.activeId ? "true" : "false"}">
-      <span class="q-item-num">${String(item.id).padStart(2, "0")}</span>
+    .map((item) => {
+      const pad = item.edition === "striver" ? 3 : 2;
+      const active = item.id === state.activeId && item.edition === state.edition;
+      const edClass = item.edition === "striver" ? "q-item-edition--striver" : "q-item-edition--pyq";
+      return `
+    <button type="button" class="q-item ${active ? "active" : ""}"
+      data-id="${item.id}" data-edition="${item.edition}" aria-current="${active ? "true" : "false"}">
+      <span class="q-item-num">
+        <span class="q-item-edition ${edClass}">${item.edition === "striver" ? "STR" : "PYQ"}</span>
+        ${String(item.id).padStart(pad, "0")}
+      </span>
       <span class="q-item-title">${escapeHtml(item.title)}</span>
       <span class="q-item-meta">
         <span class="${difficultyClass(item.difficulty)}">${item.difficulty}</span>
         <span class="pill">${escapeHtml(item.timeComplexity)}</span>
       </span>
-    </button>`
-    )
+    </button>`;
+    })
     .join("");
 
   list.querySelectorAll(".q-item").forEach((btn) => {
     btn.addEventListener("click", () => {
-      showQuestion(Number(btn.dataset.id));
+      showQuestion(btn.dataset.edition, Number(btn.dataset.id));
       openSidebar(false);
     });
   });
 }
 
-function showQuestion(id) {
-  const item = state.questions.find((q) => q.id === id);
+function showQuestion(edition, id) {
+  const item = findQuestion(edition, id);
   if (!item) return;
 
+  if (state.edition !== edition) setEdition(edition);
+
   state.activeId = id;
-  history.replaceState(null, "", `#q${id}`);
+  history.replaceState(null, "", `#${edition}-${id}`);
 
   $("#welcomePanel")?.classList.add("hidden");
   $("#questionDetail")?.classList.remove("hidden");
 
-  $("#detailNumber").textContent = String(item.id).padStart(2, "0");
-  $("#detailEyebrow").textContent = `Question ${item.id} of ${state.questions.length}`;
+  const pad = item.edition === "striver" ? 3 : 2;
+  $("#detailNumber").textContent = String(item.id).padStart(pad, "0");
+  const pool = editionQuestions(item.edition);
+  $("#detailEyebrow").textContent = `${item.editionLabel || item.edition} · ${item.id} of ${pool.length}`;
   $("#detailTitle").textContent = item.title;
 
   const diffKey = (item.difficulty || "medium").toLowerCase();
+  const edBadge =
+    item.edition === "striver"
+      ? '<span class="badge edition-striver">Striver 100</span>'
+      : '<span class="badge edition-pyq">PYQ</span>';
   const badges = [
+    edBadge,
     `<span class="badge ${diffKey}">${item.difficulty}</span>`,
     `<span class="badge">${escapeHtml(item.timeComplexity)}</span>`,
     ...item.topics.map((t) => `<span class="badge topic">${escapeHtml(t)}</span>`),
@@ -264,7 +335,9 @@ function showQuestion(id) {
   renderList();
   updateNav();
 
-  const activeBtn = document.querySelector(`.q-item[data-id="${id}"]`);
+  const activeBtn = document.querySelector(
+    `.q-item[data-id="${id}"][data-edition="${edition}"]`
+  );
   activeBtn?.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
@@ -272,7 +345,7 @@ function pickRandom() {
   const list = getNavList();
   if (!list.length) return;
   const item = list[Math.floor(Math.random() * list.length)];
-  showQuestion(item.id);
+  showQuestion(item.edition, item.id);
 }
 
 async function copyCode() {
@@ -300,8 +373,10 @@ function syncDifficultyChips() {
 }
 
 function initFromHash() {
-  const m = location.hash.match(/^#q(\d+)$/);
-  if (m) showQuestion(Number(m[1]));
+  const m = location.hash.match(/^#(pyq|striver)-(\d+)$/);
+  if (m) showQuestion(m[1], Number(m[2]));
+  const legacy = location.hash.match(/^#q(\d+)$/);
+  if (legacy) showQuestion("pyq", Number(legacy[1]));
 }
 
 function isTypingContext() {
@@ -312,12 +387,16 @@ function isTypingContext() {
 async function init() {
   const res = await fetch("data/questions.json");
   state.questions = await res.json();
-  state.filtered = [...state.questions];
-
-  buildTopicFilter(state.questions);
-  renderStats(state.questions);
+  updateEditionCounts();
+  buildTopicFilter();
+  setEdition(state.edition);
+  renderStats();
   renderList();
   updateListCount();
+
+  $$(".edition-btn").forEach((btn) => {
+    btn.addEventListener("click", () => setEdition(btn.dataset.edition));
+  });
 
   $("#searchInput").addEventListener("input", applyFilters);
   $("#topicFilter").addEventListener("change", applyFilters);
@@ -336,7 +415,7 @@ async function init() {
 
   $("#startBtn")?.addEventListener("click", () => {
     const first = getNavList()[0];
-    if (first) showQuestion(first.id);
+    if (first) showQuestion(first.edition, first.id);
   });
   $("#randomBtn")?.addEventListener("click", pickRandom);
   $("#brandHome")?.addEventListener("click", (e) => {

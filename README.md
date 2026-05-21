@@ -1,6 +1,11 @@
 # TCS NQT PYQ — Self Study Website
 
-A static study site for all **72** TCS NQT previous-year C++ questions. Each question includes:
+A static study site with **172** C++ questions:
+
+- **72 TCS NQT PYQ** — previous-year exam questions  
+- **100 Striver's Q for TCS NQT** — fundamentals sheet (not PYQ)
+
+Each question includes:
 
 - Problem statement & constraints
 - Full C++ solution (copy button)
@@ -28,7 +33,8 @@ A static study site for all **72** TCS NQT previous-year C++ questions. Each que
 
 | Path | Purpose |
 |------|---------|
-| `*.cpp` | Source questions with comments |
+| `*.cpp` | TCS NQT PYQ source files |
+| `100 q by striver for tcsnqt/` | Striver 100 Q source files (by topic folder) |
 | `scripts/build_questions.py` | Parser → `website/data/questions.json` |
 | `website/` | HTML/CSS/JS study UI |
 
